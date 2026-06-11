@@ -7,7 +7,7 @@
         <x-badge variant="type">{{ $offre->type_emploi }}</x-badge>
         @if($offre->date_publication)
             <span class="text-xs text-bleu-doux">
-                {{ $offre->date_publication->translatedFormat('j M Y') }}
+                {{ $offre->date_publication->format('d/m/Y') }}
             </span>
         @endif
     </div>

@@ -25,7 +25,7 @@ class CandidatureController extends Controller
             'courriel'  => ['required', 'email', 'max:255'],
             'telephone' => ['nullable', 'string', 'max:50'],
             'message'   => ['nullable', 'string', 'max:2000'],
-            'cv'        => ['required', 'file', 'max:2048', 'mimes:pdf,doc,docx,txt,rtf,odt'],
+            'cv'        => ['required', 'file', 'max:2048', 'extensions:pdf,doc,docx,txt,rtf,odt'],
         ]);
 
         $fichier = $request->file('cv');
