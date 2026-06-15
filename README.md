@@ -1,59 +1,120 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Emploi Interne
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Site interne d'offres d'emploi développé avec Laravel, Eloquent, Blade et Tailwind CSS.
 
-## About Laravel
+## Aperçu
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+- Consultation des offres d'emploi actives
+- Soumission de candidatures avec téléversement de CV sécurisé
+- Interface d'administration pour gérer les offres et consulter les candidatures
+- Design responsive avec palette de couleurs personnalisée
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Technologies utilisées
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+- **PHP 8.2** / **Laravel 12**
+- **SQLite** — base de données locale
+- **Eloquent ORM** — modèles et relations
+- **Blade** — composants réutilisables
+- **Tailwind CSS v4** — design utilitaire
+- **Vite** — compilation des assets
 
-## Learning Laravel
+## Installation
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework. You can also check out [Laravel Learn](https://laravel.com/learn), where you will be guided through building a modern Laravel application.
+### Prérequis
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+- PHP 8.2 ou supérieur
+- Composer
+- Node.js 20 ou supérieur (26 utilisée)
+- npm
 
-## Laravel Sponsors
+### Étapes
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+**1. Cloner le dépôt**
+```bash
+git clone https://github.com/AliouneDiop02/emploi-interne.git
+cd emploi-interne
+```
 
-### Premium Partners
+**2. Installer les dépendances PHP**
+```bash
+composer install
+```
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+**3. Installer les dépendances JavaScript**
+```bash
+npm install
+```
 
-## Contributing
+**4. Configurer l'environnement**
+```bash
+cp .env.example .env
+php artisan key:generate
+```
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+**5. Configurer la base de données**
 
-## Code of Conduct
+Dans le fichier `.env`, assurez-vous d'avoir :
+```env
+DB_CONNECTION=sqlite
+```
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+Créer le fichier SQLite :
+```bash
+# Mac / Linux
+touch database/database.sqlite
 
-## Security Vulnerabilities
+# Windows
+type nul > database\database.sqlite
+```
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+**6. Exécuter les migrations et le seeder**
+```bash
+php artisan migrate:fresh --seed
+```
 
-## License
+**7. Compiler les assets**
+```bash
+npm run build
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+**8. Lancer le serveur**
+```bash
+php artisan serve
+```
+
+Accédez à l'application sur **http://localhost:8000**
+
+## Structure des URLs
+
+**Public**
+- `GET /emplois` — Liste des offres actives
+- `GET /emplois/{id}` — Détail d'une offre
+- `GET /emplois/{id}/postuler` — Formulaire de candidature
+- `POST /emplois/{id}/postuler` — Soumettre une candidature
+
+**Administration**
+- `GET /admin/offres` — Gestion des offres
+- `GET /admin/offres/create` — Créer une offre
+- `POST /admin/offres` — Enregistrer une nouvelle offre
+- `GET /admin/offres/{id}/edit` — Modifier une offre
+- `PUT /admin/offres/{id}` — Sauvegarder les modifications
+- `DELETE /admin/offres/{id}` — Supprimer une offre
+- `GET /admin/offres/{id}/candidatures` — Candidatures d'une offre
+- `GET /admin/candidatures/{id}/cv` — Télécharger un CV
+
+
+## Données de démonstration
+
+Le seeder crée automatiquement :
+- **6 offres d'emploi** (5 actives, 1 inactive)
+- **3 candidatures** de démonstration
+
+## Développement
+
+Pour lancer en mode développement avec rechargement automatique :
+
+```bash
+# Terminal 1
+php artisan serve
+
+# Terminal 2
+npm run dev
