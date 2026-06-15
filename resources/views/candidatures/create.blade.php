@@ -75,9 +75,6 @@
                                 Formats acceptés : PDF, DOC, DOCX, TXT, RTF, ODT — Maximum 2 Mo
                             </p>
                             <p id="cv-erreur" class="text-xs text-red-600 mt-1 hidden"></p>
-                            @error('cv')
-                                <p class="text-xs text-red-600 mt-1">{{ $message }}</p>
-                            @enderror
                         </x-form.field>
                     </div>
 
@@ -128,46 +125,4 @@
 
 </x-layout>
 
-{{-- Validation JavaScript côté client --}}
-<script>
-const TAILLE_MAX = 2 * 1024 * 1024; // 2 Mo en octets
-const EXTENSIONS_OK = ['pdf', 'doc', 'docx', 'txt', 'rtf', 'odt'];
 
-function validerCV(input) {
-    const erreur = document.getElementById('cv-erreur');
-    const bouton = document.getElementById('btn-soumettre');
-
-    // Réinitialise l'erreur
-    erreur.textContent = '';
-    erreur.classList.add('hidden');
-    bouton.disabled = false;
-
-    if (!input.files.length) return;
-
-    const fichier = input.files[0];
-
-    // Vérifie l'extension
-    const extension = fichier.name.split('.').pop().toLowerCase();
-    if (!EXTENSIONS_OK.includes(extension)) {
-        erreur.textContent = `Extension non autorisée (.${extension}). Utilisez : PDF, DOC, DOCX, TXT, RTF ou ODT.`;
-        erreur.classList.remove('hidden');
-        bouton.disabled = true;
-        input.value = '';
-        return;
-    }
-
-    // Vérifie la taille
-    if (fichier.size > TAILLE_MAX) {
-        const tailleMo = (fichier.size / 1024 / 1024).toFixed(2);
-        erreur.textContent = `Fichier trop volumineux (${tailleMo} Mo). Maximum autorisé : 2 Mo.`;
-        erreur.classList.remove('hidden');
-        bouton.disabled = true;
-        input.value = '';
-        return;
-    }
-
-    // Tout est bon
-    erreur.classList.add('hidden');
-    bouton.disabled = false;
-}
-</script>

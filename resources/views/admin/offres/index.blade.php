@@ -68,7 +68,7 @@
                                           onsubmit="return confirm('Supprimer cette offre et toutes ses candidatures ?')">
                                         @csrf
                                         @method('DELETE')
-                                        <x-button variant="danger">Supprimer</x-button>
+                                        <x-button variant="danger"  type="submit">Supprimer</x-button>
                                     </form>
                                 </div>
                             </td>
