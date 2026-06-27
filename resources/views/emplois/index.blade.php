@@ -28,4 +28,31 @@
         </div>
     @endif
 
+    {{-- Sélecteur par page + pagination --}}
+    @if($offres->hasPages())
+        <div class="mt-8 flex flex-col sm:flex-row items-center justify-between gap-4">
+
+            {{-- Sélecteur nombre par page --}}
+            <div class="flex items-center gap-2 text-sm text-bleu-doux">
+                <span>Afficher</span>
+                <select
+                    onchange="window.location='?par_page='+this.value"
+                    class="rounded-lg border border-bleu-moyen bg-white px-3 py-1.5 text-sm text-bleu-texte focus:outline-none focus:ring-2 focus:ring-bleu-vif">
+                    @foreach([10, 25, 50] as $option)
+                        <option value="{{ $option }}" {{ $parPage == $option ? 'selected' : '' }}>
+                            {{ $option }}
+                        </option>
+                    @endforeach
+                </select>
+                <span>par page — {{ $offres->total() }} offres au total</span>
+            </div>
+
+            {{-- Liens de pagination --}}
+            <div>
+                {{ $offres->links() }}
+            </div>
+
+        </div>
+    @endif
+
 </x-layout>

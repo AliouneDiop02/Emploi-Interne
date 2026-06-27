@@ -11,11 +11,16 @@ class OffreEmploiController extends Controller
 {
     public function index(): View
     {
+        $parPage = in_array(request('par_page'), [10, 25, 50])
+        ? request('par_page')
+        : 10;
+
         $offres = OffreEmploi::withCount('candidatures')
             ->latest()
-            ->get();
+            ->paginate($parPage)
+            ->withQueryString();
 
-        return view('admin.offres.index', compact('offres'));
+        return view('admin.offres.index', compact('offres', 'parPage'));
     }
 
     public function create(): View

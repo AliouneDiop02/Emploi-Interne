@@ -76,6 +76,30 @@
                     @endforeach
                 </tbody>
             </table>
+            {{-- Pagination admin --}}
+            @if($offres->hasPages())
+                <div class="mt-6 flex flex-col sm:flex-row items-center justify-between gap-4 pt-4 border-t border-bleu-clair">
+
+                    <div class="flex items-center gap-2 text-sm text-bleu-doux">
+                        <span>Afficher</span>
+                        <select
+                            onchange="window.location='?par_page='+this.value"
+                            class="rounded-lg border border-bleu-moyen bg-white px-3 py-1.5 text-sm text-bleu-texte focus:outline-none focus:ring-2 focus:ring-bleu-vif">
+                            @foreach([10, 25, 50] as $option)
+                                <option value="{{ $option }}" {{ $parPage == $option ? 'selected' : '' }}>
+                                    {{ $option }}
+                                </option>
+                            @endforeach
+                        </select>
+                        <span>par page — {{ $offres->total() }} offres au total</span>
+                    </div>
+
+                    <div>
+                        {{ $offres->links() }}
+                    </div>
+
+                </div>
+            @endif
         </x-panel>
     @endif
 
