@@ -10,6 +10,7 @@ class Candidature extends Model
     protected $table = 'candidatures';
 
     protected $fillable = [
+        'user_id',
         'offre_emploi_id',
         'prenom',
         'nom',
@@ -26,5 +27,10 @@ class Candidature extends Model
     public function offreEmploi(): BelongsTo
     {
         return $this->belongsTo(OffreEmploi::class);
+    }
+
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class);
     }
 }

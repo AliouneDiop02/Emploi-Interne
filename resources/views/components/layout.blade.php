@@ -24,21 +24,58 @@
                     <x-nav-link :href="route('emplois.index')" :active="request()->routeIs('emplois.*')">
                         Offres d'emploi
                     </x-nav-link>
-                    <x-nav-link :href="route('admin.offres.index')" :active="request()->routeIs('admin.*')">
-                        Administration
-                    </x-nav-link>
+                     @auth
+                        @if(auth()->user()->isAdmin())
+                            <x-nav-link :href="route('admin.offres.index')" :active="request()->routeIs('admin.*')">
+                                Administration
+                            </x-nav-link>
+                        @endif
+
+                        {{-- Lien Mes candidatures — visible pour les candidats --}}
+                        {{-- @if(auth()->user()->isCandidat())
+                            <x-nav-link :href="route('mes-candidatures')" :active="request()->routeIs('mes-candidatures*')">
+                                Mes candidatures
+                            </x-nav-link>
+                        @endif --}}
+                    @endauth
                 </div>
 
                 {{-- Liens auth (prochain LAB) --}}
                 <div class="flex items-center gap-2">
-                    <a href="#"
-                       class="text-sm text-bleu-doux hover:text-bleu-texte px-3 py-1.5 rounded-lg hover:bg-bleu-moyen transition">
-                        Connexion
-                    </a>
-                    <a href="#"
-                       class="text-sm font-medium bg-bleu-vif text-bleu-texte px-4 py-1.5 rounded-lg hover:bg-bleu-moyen transition">
-                        S'inscrire
-                    </a>
+                    @guest
+                        {{-- Visiteur non connecté --}}
+                        <a href="{{ route('login') }}"
+                           class="text-sm text-bleu-doux hover:text-bleu-texte px-3 py-1.5 rounded-lg hover:bg-bleu-moyen transition">
+                            Connexion
+                        </a>
+                        <a href="{{ route('register') }}"
+                           class="text-sm font-medium bg-bleu-vif text-bleu-texte px-4 py-1.5 rounded-lg hover:bg-bleu-moyen transition">
+                            S'inscrire
+                        </a>
+                    @endguest
+
+                    @auth
+                        {{-- Nom de l'utilisateur + badge rôle --}}
+                        <div class="hidden md:flex items-center gap-2">
+                            <span class="text-sm text-bleu-doux">
+                                👤 {{ auth()->user()->name }}
+                            </span>
+                            @if(auth()->user()->isAdmin())
+                                <span class="text-xs bg-bleu-vif text-bleu-texte px-2 py-0.5 rounded-full font-medium">
+                                    Admin
+                                </span>
+                            @endif
+                        </div>
+
+                        {{-- Déconnexion --}}
+                        <form method="POST" action="{{ route('logout') }}">
+                            @csrf
+                            <button type="submit"
+                                    class="text-sm text-bleu-doux hover:text-bleu-texte px-3 py-1.5 rounded-lg hover:bg-bleu-moyen transition">
+                                Déconnexion
+                            </button>
+                        </form>
+                    @endauth
                 </div>
 
             </div>
