@@ -16,6 +16,10 @@ return new class extends Migration
             $table->foreignId('offre_emploi_id')
                   ->constrained('offres_emploi')
                   ->cascadeOnDelete();
+            $table->foreignId('user_id')
+                  ->nullable()
+                  ->constrained('users')
+                  ->nullOnDelete();
             $table->string('prenom');
             $table->string('nom');
             $table->string('courriel');

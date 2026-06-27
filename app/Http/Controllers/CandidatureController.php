@@ -12,7 +12,9 @@ class CandidatureController extends Controller
     {
         abort_unless($offreEmploi->est_active, 404);
 
-        return view('candidatures.create', compact('offreEmploi'));
+        $user = auth()->user();
+
+        return view('candidatures.create', compact('offreEmploi', 'user'));
     }
 
     public function store(Request $request, OffreEmploi $offreEmploi)

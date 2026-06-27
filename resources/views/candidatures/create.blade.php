@@ -29,18 +29,21 @@
                     {{-- Nom et prénom --}}
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
                         <x-form.field name="prenom" label="Prénom *">
-                            <x-form.input name="prenom" placeholder="Marie" />
+                            <x-form.input name="prenom" placeholder="Marie"
+                                          :value="old('prenom', $user->name ? explode(' ', $user->name)[0] : '')"/>
                         </x-form.field>
 
                         <x-form.field name="nom" label="Nom *">
-                            <x-form.input name="nom" placeholder="Tremblay" />
+                            <x-form.input name="nom" placeholder="Tremblay"
+                                          :value="old('nom', $user->name ? (explode(' ', $user->name)[1] ?? '') : '')"/>
                         </x-form.field>
                     </div>
 
                     {{-- Courriel --}}
                     <div class="mb-4">
                         <x-form.field name="courriel" label="Adresse courriel *">
-                            <x-form.input name="courriel" type="email" placeholder="marie.tremblay@email.com" />
+                            <x-form.input name="courriel" type="email" placeholder="marie.tremblay@email.com"
+                                          :value="old('courriel', $user->email)"/>
                         </x-form.field>
                     </div>
 
