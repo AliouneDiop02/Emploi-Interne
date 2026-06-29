@@ -32,11 +32,11 @@
                         @endif
 
                         {{-- Lien Mes candidatures — visible pour les candidats --}}
-                        {{-- @if(auth()->user()->isCandidat())
+                        @if(auth()->user()->isCandidat())
                             <x-nav-link :href="route('mes-candidatures')" :active="request()->routeIs('mes-candidatures*')">
                                 Mes candidatures
                             </x-nav-link>
-                        @endif --}}
+                        @endif
                     @endauth
                 </div>
 

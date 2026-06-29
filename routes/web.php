@@ -7,6 +7,7 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\CandidatureController;
 use App\Http\Controllers\OffreEmploiController;
+use App\Http\Controllers\MesCandidaturesController;
 
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Http\Request;
@@ -28,17 +29,17 @@ Route::post('/logout', [LoginController::class, 'logout'])
 
 Route::get('/email/verify', function(){
     return view('auth.verify-email');
-})->middleware('auth')->name('verification.notice');
+    })->middleware('auth')->name('verification.notice');
 
 Route::get('/email/verify/{id}/{hash}', function(EmailVerificationRequest $request){
     $request->fulfill();
     return redirect()->route('emplois.index')->with('success', 'Votre courriel est verifié.');
-})->middleware(['auth', 'signed'])->name('verification.verify');
+    })->middleware(['auth', 'signed'])->name('verification.verify');
 
 Route::post('/email/verification-notification', function(Request $request){
     $request->user()->sendEmailVerificationNotification();
     return back()->with('success', 'Un nouveau lien de vérification a été envoyé.');
-})->middleware(['auth', 'throttle:6,1'])->name('verification.send');
+    })->middleware(['auth', 'throttle:6,1'])->name('verification.send');
 
 Route::redirect('/', '/emplois');
 
@@ -50,10 +51,25 @@ Route::get('/emplois/{offreEmploi}', [OffreEmploiController::class, 'show'])
 
 Route::middleware(['auth','verified'])->group(function(){
     Route::get('/emplois/{offreEmploi}/postuler', [CandidatureController::class, 'create'])
-    ->name('candidatures.create');
+        ->name('candidatures.create');
 
     Route::post('/emplois/{offreEmploi}/postuler', [CandidatureController::class, 'store'])
-    ->name('candidatures.store');
+        ->name('candidatures.store');
+
+    Route::get('/mes-candidatures', [MesCandidaturesController::class, 'index'])
+        ->name('mes-candidatures');
+
+    Route::get('/mes-candidatures/{id}', [MesCandidaturesController::class, 'show'])
+        ->name('mes-candidatures.show');
+
+    Route::get('/mes-candidatures/{id}/edit', [MesCandidaturesController::class, 'edit'])
+        ->name('mes-candidatures.edit');
+
+    Route::put('/mes-candidatures/{id}', [MesCandidaturesController::class, 'update'])
+        ->name('mes-candidatures.update');
+
+    Route::delete('/mes-candidatures/{id}', [MesCandidaturesController::class, 'destroy'])
+        ->name('mes-candidatures.destroy');
 });
 
 
